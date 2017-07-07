@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="sablonas.xhtml">
+
+	<ui:define name="turinys">
+		<h:form>
+		<p:button value="Back" outcome="back"
+				icon="ui-icon-arrowreturnthick-1-w" />
+			<p:button value="Home" outcome="home" icon="ui-icon-home" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
+			<p:dataTable value="#{newItemBean.itemList}" var="item">
+				<f:facet name="header">
+					<h:outputText
+						value="Invoice number : #{invoiceModel.currentInvoice.number}" />
+				</f:facet>
+				<p:column headerText="Title">
+					<h:outputText value="#{item.title}" />
+				</p:column>
+				<p:column headerText="Amount">
+					<h:outputText value="#{item.amount}" />
+				</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="#{item.price} &#8364;" />
+				</p:column>
+				<p:column headerText="Total price">
+					<h:outputText value="#{item.totalPrice} &#8364;" />
+				</p:column>
+			</p:dataTable>
+			<br/>
+			<p:chart type="bar" model="#{newInvoiceBean.chart(invoiceModel.currentInvoice)}" style="height:300px"/>
+		</h:form>
+	</ui:define>
+</ui:composition>

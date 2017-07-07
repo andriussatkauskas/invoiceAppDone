@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="sablonas.xhtml">
+
+	<ui:define name="turinys">
+		<h:form>
+			<p:panel id="basic" header="Invoice" style="margin-bottom:20px">
+				<h:panelGrid id="grid" columns="3" cellpadding="5">
+					<h:outputLabel for="invoice_number" value="Invoice number"></h:outputLabel>
+					<p:inputText id="invoice_number"
+						value="#{invoiceModel.currentInvoice.number}">
+						<f:validateBean />
+					</p:inputText>
+					<p:message for="invoice_number" />
+					<h:outputLabel for="invoice_date" value="Invoice date"></h:outputLabel>
+					<p:calendar id="invoice_date" pattern="yyyy-MM-dd" navigator="true" mask="9999-99-99"
+						value="#{invoiceModel.currentInvoice.date}" />
+					<p:message for="invoice_date" />
+					<h:outputLabel for="company" value="Company"></h:outputLabel>
+					<p:inputText id="company"
+						value="#{invoiceModel.currentInvoice.company}">
+					</p:inputText>
+					<p:message for="company" />
+					<h:outputLabel for="recipient" value="Recipient"></h:outputLabel>
+					<p:inputText id="recipient"
+						value="#{invoiceModel.currentInvoice.recipient}">
+					</p:inputText>
+					<p:message for="recipient" />
+				</h:panelGrid>
+			</p:panel>
+			<p:commandButton action="#{newInvoiceBean.save()}" value="Add new"
+				update="@form"></p:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>

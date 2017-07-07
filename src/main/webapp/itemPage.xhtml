@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets" template="sablonas.xhtml">
+
+	<ui:define name="turinys">
+		<h:form>
+		<p:button value="Back" outcome="back"
+				icon="ui-icon-arrowreturnthick-1-w" />
+			<p:button value="Home" outcome="home" icon="ui-icon-home" />
+			<p:messages id="messages" showDetail="false" autoUpdate="true"
+				closable="true" />
+			<p:dataTable value="#{newItemBean.itemList}" var="item"
+				rowkey="item.id">
+				<f:facet name="header">
+					<h:outputText
+						value="Invoice number : #{invoiceModel.currentInvoice.number}" />
+				</f:facet>
+				<p:column headerText="Title">
+					<h:outputText value="#{item.title}" />
+				</p:column>
+				<p:column headerText="Amount">
+					<h:outputText value="#{item.amount}" />
+				</p:column>
+				<p:column headerText="Unit Price">
+					<h:outputText value="#{item.price} &#8364;" />
+				</p:column>
+				<p:column headerText="Total price">
+					<h:outputText value="#{item.totalPrice} &#8364;" />
+				</p:column>
+				<p:column>
+					<p:commandButton value="Delete"
+						action="#{newItemBean.deleteSelectedItem(item)}" update="@form">
+						<p:confirm header="Confirmation" message="Are you sure?"
+							icon="ui-icon-alert" />
+					</p:commandButton>
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Yes" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="No" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+					<p:commandButton value="Edit"
+						action="#{newItemBean.editItem(item)}" update="@form" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<h:form>
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<p:panel id="basic" header="Item details" style="margin-bottom:20px">
+				<h:panelGrid id="grid" columns="3" cellpadding="5">
+					<h:outputLabel for="itemTitle" value="Item title"></h:outputLabel>
+					<p:inputText id="itemTitle" value="#{itemModel.currentItem.title}">
+						<f:validateBean />
+					</p:inputText>
+					<p:message for="itemTitle" />
+					<h:outputLabel for="amount" value="Amount"></h:outputLabel>
+					<p:inputText id="amount" value="#{itemModel.currentItem.amount}">
+					</p:inputText>
+					<p:message for="amount" />
+					<h:outputLabel for="price" value="Price"></h:outputLabel>
+					<p:inputText id="price" value="#{itemModel.currentItem.price}">
+					</p:inputText>
+					<p:message for="price" />
+				</h:panelGrid>
+				<p:commandButton action="#{newItemBean.create()}" value="Add new"
+					update="@form"></p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
